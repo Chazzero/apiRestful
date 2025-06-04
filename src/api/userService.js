@@ -22,3 +22,7 @@ export const updateUser = async (id, userData) => {
   const response = await axios.put(`${BASE_URL}/${id}`, userData);
   return response.data;
 };
+export const  patchUser = async (id, partialData) =>{
+  const response = await axios.patch(`${BASE_URL}/${id}`, partialData);
+  return response.data;
+}
