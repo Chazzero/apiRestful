@@ -21,7 +21,7 @@ function app(){
 
 {/* <Formulario/> */}
 <br />
-<h1>api modularizada pruebas</h1>
+<h1>api modularizada pruebas 2</h1>
 <UserList/>
 
 <br />
