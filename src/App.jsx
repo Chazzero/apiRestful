@@ -21,16 +21,8 @@ function app(){
 
 {/* <Formulario/> */}
 <br />
-<h1>api modularizada pruebas 2</h1>
+<h1>Api Restful modularizada </h1>
 <UserList/>
-
-<br />
-<button className='btn btn-primary'>Hola mundo </button>
-
-<div>
-<button type="button" className="btn btn-secondary">Secondary</button>
-
-</div>
 </>
   );
 }

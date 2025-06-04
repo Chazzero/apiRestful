@@ -5,11 +5,12 @@ import {
   createUser,
   deleteUser,
   updateUser,
+  patchUser,
 } from "../api/userService";
 
 function UserList() {
   const [users, setUsers] = useState([]);
-  const [newName, setNewName] = useState("");
+  const [newUser, setNewUser] = useState({ name: "", casado: false, edad: "" });
   const [error, setError] = useState("");
   const [newEdit, setNewEdit] = useState("");
 
@@ -23,10 +24,14 @@ function UserList() {
   };
 
   const handleAdd = async () => {
-    if (!newName) return;
+    if (!newUser.name || !newUser.edad) return;
     try {
-      await createUser({ name: newName });
-      setNewName("");
+      await createUser({
+        name: newUser.name,
+        casado: newUser.casado,
+        edad: parseInt(newUser.edad),
+      });
+      setNewUser({ name: "", casado: false, edad: "" });
       getUsers();
     } catch (err) {
       setError("Error al crear usuario");
@@ -52,55 +57,75 @@ function UserList() {
       setError("Error al editar usuario");
     }
   };
+  const handlePatch = async (id) => {
+    try {
+      await patchUser(id, { casado: true, edad: 30 }); // actualiza solo la edad
+      getUsers(); // recarga lista actualizada
+    } catch (err) {
+      setError("Error al hacer patch");
+    }
+  };
+
   useEffect(() => {
-  getUsers();
-}, []);
+    getUsers();
+  }, []);
   return (
     <>
-      <h2>Usuarios</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <input
-        type="text"
-        value={newName}
-        onChange={(e) => setNewName(e.target.value)}
-        placeholder="Cambiar el nombres"
-      />
-
-      <button onClick={handleAdd}>Agregar</button>
-
-      <ul>
+      <div className="card">
+        <h4>Agregar Usuarios</h4>
+        {error && <p style={{ color: "red" }}>{error}</p>}
+        <input
+          type="text"
+          value={newUser.name}
+          onChange={(a) => setNewUser({...newUser, name:a.target.value})}
+          placeholder="agregar nombre"
+        />
+        <input
+          type="text"
+          value={newUser.casado}
+          onChange={(a) => setNewUser({...newUser, casado:a.target.value})}
+          placeholder="agregar casado"
+        />
+        <input
+          type="text"
+          value={newUser.edad}
+          onChange={(a) => setNewUser({...newUser, edad:a.target.value})}
+          placeholder="agregar edad"
+        />
+        <br />
+        <button onClick={handleAdd}>Agregar</button>
+      </div>
+      <ul style={{ listStyle: "none" }}>
         {users.map((u) => (
-          <div>
+
+          <div className="card">
             <br />
             <input
-        type="text"
-        value={newEdit}
-        onChange={(e) => setNewEdit(e.target.value)}
-        placeholder="Cambiar el nombres"
-      />
-      
+              type="text"
+              value={newEdit}
+              onChange={(e) => setNewEdit(e.target.value)}
+              placeholder="Cambiar el nombre"
+            />
+
             <br />
-          <div className="card">
-          
-          <li key={u.id}>
-            <strong>Nombre:</strong> {u.name}
+            <li key={u.id}>
+              <strong>Nombre:</strong> {u.name}
+              <br />
+              <strong>Casado:</strong> {u.casado ? "si" : "no"}
+              <br />
+              <strong>Edad:</strong>
+              {u.edad}
+              <br />
+              <strong>Id:</strong> {u.id}
+              <br />
+              <button onClick={() => handleEdit(u.id, u.name)}>
+                Editar
+              </button>{" "}
+              {/*crear una forma de agregar un input y de esa forma poder editar de forma verdadera el usuario  */}
+              <button onClick={() => handleDelete(u.id)}>Eliminar</button>
+            </li>
+
             <br />
-            <strong>Casado:</strong> {u.casado ? "si" : "no"} 
-            <br />
-            <strong>Edad:</strong>
-            {u.edad}
-            <br />
-            <strong>Id:</strong> {u.id}
-            <br />
-            <button onClick={() => handleEdit(u.id, u.name)}>
-              Editar
-            </button>{" "}
-            {/*crear una forma de agregar un input y de esa forma poder editar de forma verdadera el usuario  */}
-            <button onClick={() => handleDelete(u.id)}>Eliminar</button>
-          </li>
-          
-          </div>
-          <br/>
           </div>
         ))}
       </ul>
