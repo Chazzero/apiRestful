@@ -21,9 +21,9 @@ function app(){
 
 {/* <Formulario/> */}
 <br />
-<h1>api modularizada</h1>
+<h1>api modularizada pruebas</h1>
 <UserList/>
-tortilla
+
 <br />
 <button className='btn btn-primary'>Hola mundo </button>
 
