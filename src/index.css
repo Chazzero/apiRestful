@@ -65,7 +65,22 @@ button:hover {
   background-color: #45a049;
 }
 
-.card {
-  width: 20%;
-border: 2px solid black;
+.card1 {
+  text-align: center;
+  background: #eee;
+  padding: 16px;
+  border-radius: 8px;
+  text-align: center;
 }
+.formStyle {
+  width: 300px;
+margin:0 auto;
+}
+.userList-grid {
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 16px;
+
+} 

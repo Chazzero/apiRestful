@@ -19,10 +19,11 @@ function app(){
   return (
 <>
 
-{/* <Formulario/> */}
+<div className='formStyle'><Formulario/></div> 
+
 <br />
 <h1>Api Restful modularizada </h1>
-<UserList/>
+<div><UserList/></div>
 </>
   );
 }

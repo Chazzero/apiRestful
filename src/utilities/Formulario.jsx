@@ -1,20 +1,41 @@
+import { useState } from "react";
+
 function Formulario() {
-return (
-    <div className="formulario-contenedor">
-      <h2>Formulario de Contacto</h2>
-      <form action="#" method="POST">
-        <label htmlFor="nombre">Nombre:</label>
-        <input type="text" id="nombre" name="nombre" required />
+  const [formData, setFormData] = useState({
+    nombre: "",
+    email: ""
+  });
 
-        <label htmlFor="email">Correo Electrónico:</label>
-        <input type="email" id="email" name="email" required />
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
 
-        <label htmlFor="mensaje">Mensaje:</label>
-        <textarea id="mensaje" name="mensaje" rows="5" required></textarea>
+  const handleSubmit = (e) => {
+    e.preventDefault(); // evita que se recargue la página
+    console.log("Datos enviados:", formData);
+    // acá podrías hacer un fetch o axios POST al servidor
+  };
 
-        <button type="submit">Enviar</button>
-      </form>
-    </div>
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        name="nombre"
+        placeholder="Tu nombre"
+        value={formData.nombre}
+        onChange={handleChange}
+      />
+      <input
+        type="email"
+        name="email"
+        placeholder="Tu email"
+        value={formData.email}
+        onChange={handleChange}
+      />
+      <button type="submit">Enviar</button>
+    </form>
   );
 }
+
 export default Formulario;
